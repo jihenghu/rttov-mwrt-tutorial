@@ -1,49 +1,29 @@
----
-title: RTTOV模式笔记：(一) 依赖安装
-date: 2023-07-21 22:00:00  
-tags: 
-- RTTOV
-- RTM
-categories: 
-- Research
-cover: https://s2.loli.net/2023/11/27/LtPk9WIfbrmwsDY.jpg
-description: 本节介绍RTTOV的服务器安装所需要的依赖，包括NETCDF,HDF5,zlib等库的安装。
----
 
-{% note primary %}
-本笔记属于[RTTOV辐射传输模式学习笔记](../rttov132-column)专栏，包含以下文章：
-<div class="btn-center" style="margin-bottom:0px">
-{% btn '/research/rttov/rttov132-installlibs/', (一) 依赖安装 ,far fa-hand-point-right,outline blue larger %}
-{% btn '/research/rttov/rttov132-install/', (二) RTTOV V13.2安装  ,far fa-hand-point-right,outline pink larger %}
-{% btn '/research/rttov/rttov132-conventions/', (三) 一些约定和特性,far fa-hand-point-right,outline red larger %}
-{% btn '/research/rttov/rttov132-variables/', (四) RTTOV 变量和结构体,far fa-hand-point-right,outline purple larger %}
-{% btn '/research/rttov/rttov132-direct-fw/', (五) 基于Direct Forward的晴空模拟,far fa-hand-point-right,outline green larger %}
-{% btn '/research/rttov/rttov132-mw-scat/', (六) 基于MW-SCAT的水凝物模拟,far fa-hand-point-right,outline orange larger %}
-{% btn '/research/rttov/rttov132-emissivity-retrieve/', (七) 全天气地表微波比辐射反演方案,far fa-hand-point-right,outline navy larger %}
-</div>
-&copy; 2023-2030, Jiheng Hu. 禁止转载。
-{% endnote %}
+title: RTTOV模式笔记：(一) 依赖安装
+
+
 
 本节介绍RTTOV的服务器安装，除必要的软件支持，都使用普通用户权限来完成，做个记录；
 感谢[大气快速辐射传输模型RTTOV12.2安装教程及心得体会](https://blog.csdn.net/weixin_43471242/article/details/103248318)的详细说明，这里记录一下自己的安装过程。
 
 ### 安装环境和安装包准备 
-{% note primary %}
+
+环境：
 - Ubuntu 20.04.5 LTS (GNU/Linux 5.15.0-75-generic x86_64)
 - gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.1)
 	- gfortran 9.4.0 
 	- g++ 9.4.0
 - GNU Make 4.2.1
-{% endnote %}
 
-{% note primary %}
-安装包
-zlib-1.2.11.tar.gz
-hdf5-1.8.21.tar.gz
-netcdf-c-4.9.2.tar.gz
-netcdf-fortran-4.6.1.tar.gz
-RTTOV 13.2
-{% endnote %}
+
+
+安装包：
+- zlib-1.2.11.tar.gz
+- hdf5-1.8.21.tar.gz
+- netcdf-c-4.9.2.tar.gz
+- netcdf-fortran-4.6.1.tar.gz
+- RTTOV 13.2
+
 
 安装顺序就按照以上顺序，否则会出现依赖问题。
 将上述安装包放置到/home/hjh/下，并分别新建目录，结构如下：
@@ -216,9 +196,6 @@ netcdf-fortran-4.6.1 $ make install
 安装完成发现/home/hjh/netcdf/lib下新增了fortran相关的库文件
 
 至此，安装RTTOV的依赖已经安装好。
-
-#### RTTOV 13.2 安装RTTOV
-移步：{% btn '/research/rttov/rttov132-install/', RTTOV辐射传输模式实践：(一) RTTOV V13.2安装,far fa-hand-point-right,red larger %}
 
 ### 参考
 [大气快速辐射传输模型RTTOV12.2安装教程及心得体会](https://blog.csdn.net/weixin_43471242/article/details/103248318)
