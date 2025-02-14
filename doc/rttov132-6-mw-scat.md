@@ -1,36 +1,11 @@
----
-title: RTTOV模式学习笔记：(六) 基于MW-SCATT的水凝物模拟
-date: 2023-08-18 22:00:00  
-tags: 
-- RTTOV
-- RTM
-categories: 
-- Research
-cover: https://public.websites.umich.edu/~jihenghu/filzoo/rttov_cover2.png
-# cover: https://public.websites.umich.edu/~jihenghu/space/research/rttov/rttov132-mw-scat/rttov-scat-xminder.png
-description: 本节主要介绍RTTOV MW-SCATT模块对于水凝物散射情形的模拟。
-mathjax: true 
+# RTTOV模式学习笔记：(六) 基于MW-SCATT的水凝物模拟
 
----
-{% note primary %}
-本笔记属于[RTTOV辐射传输模式学习笔记](../rttov132-column)专栏，包含以下文章：
-<div class="btn-center" style="margin-bottom:0px">
-{% btn '/research/rttov/rttov132-installlibs/', (一) 依赖安装 ,far fa-hand-point-right,outline blue larger %}
-{% btn '/research/rttov/rttov132-install/', (二) RTTOV V13.2安装  ,far fa-hand-point-right,outline pink larger %}
-{% btn '/research/rttov/rttov132-conventions/', (三) 一些约定和特性,far fa-hand-point-right,outline red larger %}
-{% btn '/research/rttov/rttov132-variables/', (四) RTTOV 变量和结构体,far fa-hand-point-right,outline purple larger %}
-{% btn '/research/rttov/rttov132-direct-fw/', (五) 基于Direct Forward的晴空模拟,far fa-hand-point-right,outline green larger %}
-{% btn '/research/rttov/rttov132-mw-scat/', (六) 基于MW-SCATT的水凝物模拟,far fa-hand-point-right,outline orange larger %}
-{% btn '/research/rttov/rttov132-emissivity-retrieve/', (七) 全天气地表微波比辐射反演方案,far fa-hand-point-right,outline navy larger %}
-</div>
-&copy; 2023-2030, Jiheng Hu. 本专栏内容禁止转载。
-{% endnote %}
------
+&copy;Jiheng Hu 2023-2030, 禁止转载。
 
- 本节主要介绍RTTOV MW-SCATT模块对于水凝物散射和全天气微波辐射模拟。
+本节主要介绍RTTOV MW-SCATT模块对于水凝物散射和全天气微波辐射模拟。
 ## MW-SCATT原理
 1. 水凝物方案
-根据源码和[Baordo的文献](baordo.pdf)，SCATT模块采用的方案如下：
+根据源码和[Baordo的文献](./rttov132-mw-scat/baordo.pdf)，SCATT模块采用的方案如下：
 >The observation operator designed for assimilating microwave radiances in clear, cloudy and precipitating scenes is RTTOV-SCATT (Bauer et al., 2006), which uses the delta-Eddington approximation (Joseph et al., 1976) to solve the radiative transfer equation including scattering. The bulk optical properties for cloud water, cloud ice and rain are pre-tabulated for each hydrometeor type as a function of temperature, frequency and water content. Cloud water, cloud ice and rain are modelled as spherical particles using Mie theory and a constant density: the first two hydrometeors use a gamma size distribution (e.g. Petty and Huang, 2011), while a Marshall and Palmer (1948) size distribution is used for rain.   
 
     总结来说，采用了：
@@ -42,14 +17,12 @@ mathjax: true
 
 2. 双模计算
 MW-SCATT模块内部引用了rttov_direct()进行晴空模拟；对水凝物的散射计算使用了Hydrotable参数表来实现快速计算，采用了Eddington近似进行散射计算；
-![RTTOV-SCATT Flow Chart](home.ustc.edu.cn/~hjh18305/space/research/rttov/rttov132-mw-scat/rttov-scat-xminder.png)
+![RTTOV-SCATT Flow Chart](./rttov132-mw-scat/rttov-scat-xminder.png)
 
 3. 亮温加权
 MW-SCATT分别计算晴空气体吸收和阴天的水凝物的散射吸收，再使用云分数进行辐射的加权平均。
 $$
-\begin{align}  
 Tb_{all sky} = (1 − CC)* Tb_{clr} + CC * Tb_{cld}   
-\end{align}
 $$
 按照[Baordo的文献](baordo.pdf)介绍，CC(cloud cover)在陆地上时被赋予了所有层中最大的那层的Cmax，而在海面上，采用多种水凝物含量的多层加权Cav。
 >Over ocean surfaces, C is computed as a hydrometeor-weighted average of cloud, convective and large-scale precipitation fractions across all vertical levels, providing an approximate but computationally efficient solution to account for the effects of subgrid variability in cloud and precipitation (Geer et al., 2009a,2009b, the ‘Cav’ approach).
@@ -68,7 +41,7 @@ ALLOCATE(channel_list(nchannels))
 channel_list=(/1,2,3,4,5,6,7,8,9,10/)
 nthreads=1
 ```
-一共三条廓线，存储在[prof_rttovscatt.dat](prof_rttovscatt.dat)，每条廓线都是61层，包含大气温湿度参数和四种水凝物浓度，单位是ppmv:
+一共三条廓线，存储在[prof_rttovscatt.dat](./rttov132-mw-scat/prof_rttovscatt.dat)，每条廓线都是61层，包含大气温湿度参数和四种水凝物浓度，单位是ppmv:
 ```fortran 
 ! --- Profile 1 ---
 ! Vertical profiles:
@@ -92,7 +65,7 @@ nthreads=1
 ! Sat. zenith and azimuth angles(degrees)
    23.     0.
 ```
-输出[output_ideal_rttovscatt_fwd.dat](output_ideal_rttovscatt_fwd.dat)。  
+输出[output_ideal_rttovscatt_fwd.dat](./rttov132-mw-scat/output_ideal_rttovscatt_fwd.dat)。  
 
 2. 考虑CLW的吸收？
 在晴空的条件的模拟（不考虑水凝物的散射情况下）， RTTOV可以考虑CLW的吸收效应：
@@ -191,7 +164,7 @@ CLW廓线赋值
   ! opts%rt_mw%clw_data            = .false.
   opts%rt_mw%clw_data            = .true.  !! jiheng to enable CLW absorption
 ```
-重复以上编译运行过程，发现运行成功，输出为[output_ideal_rttovscatt_fwd-clw.dat](output_ideal_rttovscatt_fwd-clw.dat)。
+重复以上编译运行过程，发现运行成功，输出为[output_ideal_rttovscatt_fwd-clw.dat](./rttov132-mw-scat/output_ideal_rttovscatt_fwd-clw.dat)。
 大气廓线多了一类CLW，模拟的亮温和先前也有所增加：
 ```
 考虑CLW吸收前：
@@ -212,9 +185,9 @@ CLW廓线赋值
 ## FY3G MWRI个例模拟
 继续使用ERA5的大气廓线和水凝物廓线：
 - 云水、云冰和云分数如下：
-![云水含量剖面](research/rttov/rttov132-mw-scat/era5-cloud.png)
+![云水含量剖面](./rttov132-mw-scat/era5-cloud.png)
 - 雨水和雪水：
-![降水含量分布（850mb）](research/rttov/rttov132-mw-scat/era5-ice.png)
+![降水含量分布（850mb）](./rttov132-mw-scat/era5-ice.png)
 
 由于ERA5廓线在地形（如高原）以下的部分也是有效值，是地表层的填充。在输入RTTOV之前，我对水凝物廓线做了如下修正：
 ```fortran
@@ -230,19 +203,17 @@ CLW廓线赋值
 ### 亮温模拟结果
 
 考虑水凝物散射的模拟结果：
-![考虑水凝物散射的模拟结果](research/rttov/rttov132-mw-scat/FY3G_TBs_simulation_20230627.jpg)
+![考虑水凝物散射的模拟结果](./rttov132-mw-scat/FY3G_TBs_simulation_20230627.jpg)
 卫星实时观测：
-![卫星实时观测](research/rttov/rttov132-mw-scat/FY3G_TBs_obs_20230627.jpg)
+![卫星实时观测](./rttov132-mw-scat/FY3G_TBs_obs_20230627.jpg)
 上一章中晴空假设的模拟结果：
-![三通道亮温模拟](research/rttov/rttov132-mw-scat/FY3G_TBs_simu_clear_20230627.jpg)
+![三通道亮温模拟](./rttov132-mw-scat/FY3G_TBs_simu_clear_20230627.jpg)
 
 ## 使用Emissivity Atlas的模拟
 同上一章一样，我们使用TELSEM2的atlas替换模式内部的emiss方案。模拟的结果如下：
 使用TELSEM作为陆面发射率的all-weather模拟：
-![TELSEM+RTTOV_SCATT](research/rttov/rttov132-mw-scat/RTTOV-TELSEM_Cloudy_TB_20230627.jpg)
+![TELSEM+RTTOV_SCATT](./rttov132-mw-scat/RTTOV-TELSEM_Cloudy_TB_20230627.jpg)
 
-完整的运行日志如下[screen-rttoc-scatt-telsem2.log](screen-rttoc-scatt-telsem2.log)
+完整的运行日志如下[screen-rttoc-scatt-telsem2.log](./rttov132-mw-scat/screen-rttoc-scatt-telsem2.log)
 
 
-
-## EFOV平均的水凝物廓线模拟
