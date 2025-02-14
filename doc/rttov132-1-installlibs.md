@@ -27,7 +27,7 @@
 
 安装顺序就按照以上顺序，否则会出现依赖问题。
 将上述安装包放置到/home/hjh/下，并分别新建目录，结构如下：
-```
+```bash
 root@node05:/home/hjh$ tree -L 1
 .
 ├── hdf5
@@ -53,7 +53,7 @@ $ rm -r zlib-1.2.11
 从make开始一般比较顺利，没有报错信息；
 netcdf的安装需要依赖zlib,先在/home/hjh/.bashrc定义zlib路径，以配置netcdf的编译信息：
 
-```
+```bash
 ~$ vim ~/.bashrc 
 ## 追加已下两行
 ## zlib
@@ -104,7 +104,7 @@ $ make install
 ```
 可以在安装目录下/home/hjh/hdf5/bin 发现可执行文件；/home/hjh/hdf5/lib下发现库文件
 
-```
+```bash
 ~$ vim ~/.bashrc 
 ## 追加以下内容
 ## HDF5 1.8.21
@@ -114,7 +114,7 @@ export CPPFLAGS=-I/home/hjh/hdf5/include  ## comment this after compiling
 export LDFLAGS=-L/home/hjh/hdf5/lib       #
 ## 保存退出
 ```
-```
+```bash
 ~$ source ~/.bashrc
 ~$ echo $LD_LIBRARY_PATH
 ~$ echo $CPPFLAGS
@@ -135,7 +135,7 @@ netcdf-c-4.9.2 $
 ```
 
 联系管理员安装
-```
+```bash
 #apt install m4
 #apt install libcurl4-openssl-dev
 ```
@@ -149,7 +149,7 @@ make install
 
 安装完成发现/home/hjh/netcdf/bin下有很多可执行文件，但是/home/hjh/netcdf/lib 没有fortran相关的库文件，所以后面需要安装netcdf-fortran
 
-```
+```bash
 ~$ vim ~/.bashrc 
 
 ## HDF5 1.8.21
@@ -169,7 +169,7 @@ export CPPFLAGS=-I/home/hjh/netcdf/include  ## comment this after compiling
 export LDFLAGS=-L/home/hjh/netcdf/lib       ## 编译完成后注释掉
 ## 保存退出
 ```
-```
+```bash
 ~$ source ~/.bashrc
 ~$ echo $LD_LIBRARY_PATH
 ~$ echo $CPPFLAGS
@@ -187,7 +187,7 @@ $which nccopy
 ~ $ cd netcdf-fortran-4.6.1
 ```
 编译安装
-```
+```bash
 netcdf-fortran-4.6.1 $ ./configure --prefix=/home/hjh/netcdf FC=gfortran
 netcdf-fortran-4.6.1 $ make
 netcdf-fortran-4.6.1 $ make check
