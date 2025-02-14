@@ -1,29 +1,7 @@
----
-title: RTTOV模式笔记：(二) RTTOV V13.2安装
-date: 2023-07-30 22:00:00  
-tags: 
-- RTTOV
-- RTM
-categories: 
-- Research
-cover: https://s2.loli.net/2023/11/27/LtPk9WIfbrmwsDY.jpg
-description: 本节介绍RTTOV的服务器安装和消光散射系数的下载，及模式介绍。
-mathjax: true
----
 
-{% note primary %}
-本笔记属于[RTTOV辐射传输模式学习笔记](../rttov132-column)专栏，包含以下文章：
-<div class="btn-center" style="margin-bottom:0px">
-{% btn '/research/rttov/rttov132-installlibs/', (一) 依赖安装 ,far fa-hand-point-right,outline blue larger %}
-{% btn '/research/rttov/rttov132-install/', (二) RTTOV V13.2安装  ,far fa-hand-point-right,outline pink larger %}
-{% btn '/research/rttov/rttov132-conventions/', (三) 一些约定和特性,far fa-hand-point-right,outline red larger %}
-{% btn '/research/rttov/rttov132-variables/', (四) RTTOV 变量和结构体,far fa-hand-point-right,outline purple larger %}
-{% btn '/research/rttov/rttov132-direct-fw/', (五) 基于Direct Forward的晴空模拟,far fa-hand-point-right,outline green larger %}
-{% btn '/research/rttov/rttov132-mw-scat/', (六) 基于MW-SCAT的水凝物模拟,far fa-hand-point-right,outline orange larger %}
-{% btn '/research/rttov/rttov132-emissivity-retrieve/', (七) 全天气地表微波比辐射反演方案,far fa-hand-point-right,outline navy larger %}
-</div>
-&copy; 2023-2030, Jiheng Hu. 禁止转载。
-{% endnote %}
+# RTTOV模式笔记：(二) RTTOV V13.2安装
+
+&copy;Jiheng Hu 2023-2030, 禁止转载。
 
 
 在上一节中，我们已经完成了对依赖库的安装，本节将对RTTOV进行安装。
@@ -71,7 +49,7 @@ Specify installation directory relative to top-level RTTOV directory (leave blan
 ...漫长的编译...
 RTTOV compiled successfully
 ```
-![编译rttov](https://public.websites.umich.edu/~jihenghu/filzoo/rttov.compile.png) 
+![编译rttov](./filzoo/rttov.compile.png) 
 
 4. 测试RTTOV
 ```bash
@@ -79,7 +57,7 @@ $ cd rttov_test
 $ ./test_rttov13.sh ARCH=gfortran
 ```
 本次安装测试结果：
-![rttov测试结果](https://public.websites.umich.edu/~jihenghu/filzoo/rttov_test.png) 
+![rttov测试结果](./filzoo/rttov_test.png) 
 可以看出，除了HIRS这台载荷的参数有细微差异外，对于其他仪器的测试都通过了。这个报错可能是由于版本和库版本的差异导致，非常微小。由于我不使用HIRS这台仪器，这样的差异是可以接受的。
 
 
@@ -128,7 +106,7 @@ Downloading files with extension .tar.bz2 from https://nwp-saf.eumetsat.int/down
 ```
 大气消光和散射系数是按照模式方案和卫星、仪器来存储的。如`rtcoef_rttov13/rttov13pred54L/`的部分文件：  
 
-  ```
+```
 rtcoef_gpm_1_dpr.dat 	 	## DPR
 rtcoef_gpm_1_gmi.dat　		## GMI  
 rtcoef_fy3_2_mwri.dat 		## FY3B MWRI
@@ -138,35 +116,34 @@ rtcoef_fy3_5_mwhs2e_srf.dat ## FY3E MWHS
 rtcoef_fy3_5_mwts3_srf.dat  ## FY3E MWTS
 ```
 最新的FY3G MWRI和PMR,MERSI应用先行研究使用的系数表见[风云三号星G星应用先行数据集主页](http://satellite.nsmc.org.cn/FY3G/html/APPDATASET.html)。3G星的参数官方还在制作中，可能24年发布，目前使用的参数来自3D星的参数表。
-![风云三号星G星应用先行数据集](https://public.websites.umich.edu/~jihenghu/filzoo/fy3gappcoeff.png)
+![风云三号星G星应用先行数据集](./filzoo/fy3gappcoeff.png)
 2. 特性介绍
 - New hydrotables for RTTOV v13-水凝物计算
 考虑了5种水凝物的光学性质:雨、雪、霰、云液态水、云冰水。在代码中，必须按照相同的顺序在输入`cld_profiles(1:nprofiles)%hydro(1:nlevels,1:nhydro)`数组中提供含水量浓度，其中默认表的nhydro=5。您可以使用不同数量的粒子类型(nhydro)生成自己的hydrotable。
-{% note success %}
+
 5种水凝物采用的光学方案和粒径谱：
-- `rain`: Mie sphere, Marshall-Palmer size distribution (unchanged since latest v12 Mietables)
-- `snow`: ARTS large plate aggregate, Field07 tropical size distribution (updated for v13)
-- `graupel`: ARTS column, Field07 tropical size distribution (new in v13)
-- `cloud liquid`: Mie sphere, Gamma size distribution implemented within the new modified gamma framework (mostly unchanged in terms of optical properties, but with small differences from the previous gamma distribution, which was implemented internally using some scientific shortcuts)
-- `cloud ice`: ARTS large column aggregate, Gamma PSD with generalised modified gamma parameters mu = 0, lambda = 1e4, gamma = 1 and N0 free (updated for v13)
-{% endnote %}
+	- `rain`: Mie sphere, Marshall-Palmer size distribution (unchanged since latest v12 Mietables)
+	- `snow`: ARTS large plate aggregate, Field07 tropical size distribution (updated for v13)
+	- `graupel`: ARTS column, Field07 tropical size distribution (new in v13)
+	- `cloud liquid`: Mie sphere, Gamma size distribution implemented within the new modified gamma framework (mostly unchanged in terms of optical properties, but with small differences from the previous gamma distribution, which was implemented internally using some scientific shortcuts)
+	- `cloud ice`: ARTS large column aggregate, Gamma PSD with generalised modified gamma parameters mu = 0, lambda = 1e4, gamma = 1 and N0 free (updated for v13)
+
 这里提到的generalised modified PSD的形式为：
-$$
-\begin{align}
+\[
 N(D)=N_0 D^\mu e^{-\lambda D}   ;  \mu=0时退化成指数函数
-\end{align}
-$$
+\]
+
 >Geer A. J., Bauer B., Lonitz K., Barlakas V., Eriksson P., Mendrok J., Doherty A., Hocking J., and Chambon P. 2021: Bulk hydrometeor optical properties for microwave and sub-millimetre radiative transfer in RTTOV-SCATT v13.0. Geosci. Model Dev., 14, 7497-7526, https://doi.org/10.5194/gmd-14-7497-2021
 
-- MW optical depth coefs and RTTOV-SCATT optical properties
-{% note success %}
-General information on MW sensor optical depth coefficient files:
-- Based on Liebe 89/92 LbL model
-- All on 54 levels
-- v13 predictors
-- No Planck-weighted channels
-- No optional trace gases except for sensors with channels above 200GHz which enable variable O3
-{% endnote %}  
+	- MW optical depth coefs and RTTOV-SCATT optical properties
+	{% note success %}
+	General information on MW sensor optical depth coefficient files:
+	- Based on Liebe 89/92 LbL model
+	- All on 54 levels
+	- v13 predictors
+	- No Planck-weighted channels
+	- No optional trace gases except for sensors with channels above 200GHz which enable variable O3
+
 
 ## Surface Emissivity Atlas Data
 由于进行微波辐射传输模拟需要地表微波比辐射率作为输入量，去官网下载：[Emissivity_BRDF_atlas_data](https://nwp-saf.eumetsat.int/site/software/rttov/download/#Emissivity_BRDF_atlas_data)
