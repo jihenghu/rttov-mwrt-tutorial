@@ -1,15 +1,5 @@
----
-title: TELSEM Emissivity Atlas的离线使用
-date: 2023-11-18 22:00:00  
-tags: 
-- RTTOV
-- RTM
-- TELSEM
-categories: 
-- Research
-cover: https://s2.loli.net/2023/11/27/LtPk9WIfbrmwsDY.jpg
-description: 本节介绍TELSEM2 Atlas的离线使用。
----
+# TELSEM Emissivity Atlas的离线使用
+&copy;Jiheng Hu 2023-2030, 禁止转载。
 
 ## Intro
 在Direct Forward的晴空模拟的章节，我们介绍过使用TELSEM2 Atlas进行RTTOV模拟，这里单开一节对这个数据集的离线使用进行介绍。
@@ -217,7 +207,7 @@ END PROGRAM globe_mlse_telsem
 ```
 使用其他语言转换成NC文件，或者直接绘图：
 TELSEM2 6月份地表发射率估算：
-![地表发射率](research/rttov/rttov132-mw-scat/mlse_in_telsem2_mlse_SSMI_06.png)
+![地表发射率](./rttov132-mw-scat/mlse_in_telsem2_mlse_SSMI_06.png)
 
 ## References
 1. Aires, F., Prigent, C., Bernardo, F., Jiménez, C., Saunders, R. and Brunel, P. (2011), A Tool to Estimate Land-Surface Emissivities at Microwave frequencies (TELSEM) for use in numerical weather prediction. Q.J.R. Meteorol. Soc., 137: 690-699. https://doi.org/10.1002/qj.803.
