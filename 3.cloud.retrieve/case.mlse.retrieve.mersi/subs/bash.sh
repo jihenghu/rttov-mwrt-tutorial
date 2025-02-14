@@ -1,0 +1,1 @@
+gfortran -mcmodel=large mersi_clm.f90  -I/home/hjh/netcdf/include -I/home/hjh/hdf5/include -L/home/hjh/netcdf/lib -lnetcdff -lnetcdf  -L/home/hjh/hdf5/lib -lhdf5hl_fortran -lhdf5_hl -lhdf5_fortran -lhdf5 -lz -o mersi_clm.exe
