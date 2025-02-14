@@ -143,7 +143,8 @@ rtcoef_fy3_5_mwts3_srf.dat  ## FY3E MWTS
 	>Geer A. J., Bauer B., Lonitz K., Barlakas V., Eriksson P., Mendrok J., Doherty A., Hocking J., and Chambon P. 2021: Bulk hydrometeor optical properties for microwave and sub-millimetre radiative transfer in RTTOV-SCATT v13.0. Geosci. Model Dev., 14, 7497-7526, https://doi.org/10.5194/gmd-14-7497-2021
 
 - MW optical depth coefs and RTTOV-SCATT optical properties  
-	General information on MW sensor optical depth coefficient files:
+
+- General information on MW sensor optical depth coefficient files:
 	- Based on Liebe 89/92 LbL model
 	- All on 54 levels
 	- v13 predictors
