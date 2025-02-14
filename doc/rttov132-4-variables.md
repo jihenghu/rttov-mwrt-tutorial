@@ -1,29 +1,6 @@
----
-title: RTTOV模式学习笔记：(四) RTTOV 变量和结构体
-date: 2023-08-04 22:00:00  
-tags: 
-- RTTOV
-- RTM
-categories: 
-- Research
-cover: https://s2.loli.net/2023/11/27/LtPk9WIfbrmwsDY.jpg
-description: 本节解读一下RTTOV的源码，介绍一下RTTOV变量和结构体。
-mathjax: true
----
+# RTTOV模式学习笔记：(四) RTTOV 变量和结构体
 
-{% note primary %}
-本笔记属于[RTTOV辐射传输模式学习笔记](../rttov132-column)专栏，包含以下文章：
-<div class="btn-center" style="margin-bottom:0px">
-{% btn '/research/rttov/rttov132-installlibs/', (一) 依赖安装 ,far fa-hand-point-right,outline blue larger %}
-{% btn '/research/rttov/rttov132-install/', (二) RTTOV V13.2安装  ,far fa-hand-point-right,outline pink larger %}
-{% btn '/research/rttov/rttov132-conventions/', (三) 一些约定和特性,far fa-hand-point-right,outline red larger %}
-{% btn '/research/rttov/rttov132-variables/', (四) RTTOV 变量和结构体,far fa-hand-point-right,outline purple larger %}
-{% btn '/research/rttov/rttov132-direct-fw/', (五) 基于Direct Forward的晴空模拟,far fa-hand-point-right,outline green larger %}
-{% btn '/research/rttov/rttov132-mw-scat/', (六) 基于MW-SCAT的水凝物模拟,far fa-hand-point-right,outline orange larger %}
-{% btn '/research/rttov/rttov132-emissivity-retrieve/', (七) 全天气地表微波比辐射反演方案,far fa-hand-point-right,outline navy larger %}
-</div>
-&copy; 2023-2030, Jiheng Hu. 本专栏内容禁止转载。
-{% endnote %}
+&copy;Jiheng Hu 2023-2030, 禁止转载。
 
 理解和熟悉RTTOV的工程结构和变量含义是我们使用模型的第一步。RTTOV的示例和源码可以帮助我们快速搭建起自己的模拟项目。
 
@@ -56,6 +33,7 @@ $ tree
 ## RTTOV变量及其结构
 ### 类型定义
 模式的运行需要提前声明和创建一系列变量来作为输入量和输出量。这些变量和结构体在使用时需要先声明其类型，形式为：
+
 ```fortran  src/test/example_fwd.F90
   ! RTTOV variables/structures
   !====================
@@ -91,9 +69,12 @@ $ tree
         reflectance=reflectance, &
         init=.TRUE._jplm)
 ```
+
 这些TYPE在`rttov_types.F90`中被定义，我们特别看一下这些结构体的内容。
 首先，`nchanels`和`nprof`分别为模拟的通道数和廓线条数，`nchanprof = nchannels * nprof` 指定了进行模拟的次数。
+
 #### rttov_options RT方案、插值开关
+
 ```fortran 
   !> RTTOV options structure
   TYPE rttov_options
@@ -106,10 +87,14 @@ $ tree
     TYPE(rttov_opts_dev)     :: dev             !< Developer-only options
   END TYPE
 ```
+
 其中：
+
 - `rt_all`结构体设定了RT的算法大气和地表设定方案开关；(参见 TYPE rttov_opts_rt_all的定义)；
+
 - `rt_mw`结构体设定了MWRT的算法选项，如算法版本，云参数化方案等(参见 TYPE rttov_opts_rt_mw的定义)；
-    ```fortran
+
+```fortran
   !> MW-only radiative transfer options
   TYPE rttov_opts_rt_mw
     ......
@@ -118,7 +103,9 @@ $ tree
     ......
   END TYPE
 ```
+
 默认的MW模拟时不考虑cloud liquid water的吸收作用的。
+
 - `interpolation`结构体定义了廓线插值的设定，包括插值开关`opts%interpolation%addinterp = .True.` (参见rttov_opts_interp的定义)；
 
 #### rttov_chanprof 模拟量
@@ -142,6 +129,7 @@ $ tree
 ```
 
 #### rttov_coefs 大气参数
+
 coefs是用来读取和缓存RTTOV的核心--internal Optical depth coefs的变量类型。
 ```fortran
 !> @internal Optical depth coefs
