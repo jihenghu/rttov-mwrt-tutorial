@@ -1,50 +1,38 @@
----
-title: RTTOV模式笔记：(五) 基于Direct Forward的晴空模拟
-date: 2023-08-10 22:00:00  
-tags: 
-- RTTOV
-- RTM
-categories: 
-- Research
-cover: https://s2.loli.net/2023/11/27/LtPk9WIfbrmwsDY.jpg
-# cover: https://public.websites.umich.edu/~jihenghu/space/research/rttov/rttov132-mw-scat/rttov-atlas-xminder.png
-description: 本节主要介绍晴空正向微波辐射传输的源码结构及模拟实践。
----
+# RTTOV模式笔记：(五) 基于Direct Forward的晴空模拟
 
-{% note primary %}
-本笔记属于[RTTOV辐射传输模式学习笔记](../rttov132-column)专栏，包含以下文章：
-<div class="btn-center" style="margin-bottom:0px">
-{% btn '/research/rttov/rttov132-installlibs/', (一) 依赖安装 ,far fa-hand-point-right,outline blue larger %}
-{% btn '/research/rttov/rttov132-install/', (二) RTTOV V13.2安装  ,far fa-hand-point-right,outline pink larger %}
-{% btn '/research/rttov/rttov132-conventions/', (三) 一些约定和特性,far fa-hand-point-right,outline red larger %}
-{% btn '/research/rttov/rttov132-variables/', (四) RTTOV 变量和结构体,far fa-hand-point-right,outline purple larger %}
-{% btn '/research/rttov/rttov132-direct-fw/', (五) 基于Direct Forward的晴空模拟,far fa-hand-point-right,outline green larger %}
-{% btn '/research/rttov/rttov132-mw-scat/', (六) 基于MW-SCAT的水凝物模拟,far fa-hand-point-right,outline orange larger %}
-{% btn '/research/rttov/rttov132-emissivity-retrieve/', (七) 全天气地表微波比辐射反演方案,far fa-hand-point-right,outline navy larger %}
-</div>
-&copy; 2023-2030, Jiheng Hu. 本专栏内容禁止转载。
-{% endnote %}
+&copy;Jiheng Hu 2023-2030, 禁止转载。
 
 ## 晴空模拟流程
+
 - example_fwd例程
-[`/src/test/example_fwd.F90`](https://public.websites.umich.edu/~jihenghu/filzoo/example_fwd.F90)展示了对最通用简单的RTTOV晴空模拟案例，你只需要根据需求修改自己模拟输入即可。
+[`/src/test/example_fwd.F90`](./filzoo/example_fwd.F90)展示了对最通用简单的RTTOV晴空模拟案例，你只需要根据需求修改自己模拟输入即可。
 RTTOV模拟通常包含以下步骤，这也是本例程的结构。
 >   The usual steps to take when running RTTOV are as follows:
+
     1. Specify required RTTOV options
+	
     2. Read coefficients
+	
     3. Allocate RTTOV input and output structures
+	
     4. Set up the chanprof array with the channels/profiles to simulate
+	
     5. Read input profile(s)
+	
     6. Set up surface emissivity and/or reflectance
+	
     7. Call rttov_direct and store results
+	
     8. Deallocate all structures and arrays
+	
 
 rttov coefficient输入字符串地址，例如可以输入54层FY3D MWRI应用先行数据集提供的coefficient参数表：
-[`/home/hjh/rttov13/rtcoef_rttov13/rttov13pred54L/rtcoef_fy3_4_mwri.dat`](https://public.websites.umich.edu/~jihenghu/filzoo/rtcoef_fy3_4_mwri.dat)。
+[`/home/hjh/rttov13/rtcoef_rttov13/rttov13pred54L/rtcoef_fy3_4_mwri.dat`](./filzoo/rtcoef_fy3_4_mwri.dat)。
 rttov profile 输入，例程是按照格式化方式读入的，示例的廓线为:
-[`/home/hjh/rttov13/rttov_test/test_example.1/prof.dat`](https://public.websites.umich.edu/~jihenghu/filzoo/prof.dat)。
+[`/home/hjh/rttov13/rttov_test/test_example.1/prof.dat`](./filzoo/prof.dat)。
 
 - 跳过文件中的注释行：CALL rttov_skipcommentline(iup, errorstatus)
+
 - 指定气体的单位:
 	```fortran
 	! 0 => ppmv over dry air
@@ -54,10 +42,13 @@ rttov profile 输入，例程是按照格式化方式读入的，示例的廓线
 	profiles(:) % gas_units = profiles(1) % gas_units 
 	```
 	如果使用ERA5的水汽混合比Q，其单位是kg/kg，应当gas_units=1；
+	
 - 随后依次是Pressure levels (hPa)Temperature profile (K)Water vapour profile (ppmv)的自上而下的51层廓线，Ozone profile (ppmv)的轮廓线没有考虑，在源码和廓线示例中都被注释了
+
 - 最下面是近地表和surface的参数，仪器参数，分别被读进profiles(iprof)%s2m； profiles(iprof)%skin； profiles(iprof)%elevation等结构中；
+
 - 这里还有一个simple cloud 参数，对于晴空，将cloud fraction设为0.0就可以忽略云的考虑：
-```
+```f90
 ! Cloud top pressure (hPa) and cloud fraction for simple cloud scheme
    500.00    0.0
 ```
@@ -69,6 +60,7 @@ rttov profile 输入，例程是按照格式化方式读入的，示例的廓线
 3. 只考虑水汽的吸收，不考虑O3、云等水凝物的吸收和散射
 
 输入的设置如下：
+
 ```fortran example_fwd.F90
   !========== Interactive inputs == start ==============
   ! coeff 文件
@@ -317,7 +309,7 @@ $ tar -xvf telsem2_mw_atlas.tar.bz2
 telsem包含了ASCII方式存储的Atlas和独立的Fortran读取代码，可以在别的地方使用。RTTOV内置了针对TELSEM2的发射率地图和相应的插值工具的支持。
 
 ### 使用Atlas
-![](research/rttov/rttov132-mw-scat/rttov-atlas-xminder.png)
+![](./rttov132-mw-scat/rttov-atlas-xminder.png)
 
 ```fortran 根据提供的月份读取emissivity
   ! Use emissivity atlas
@@ -357,17 +349,17 @@ CALL rttov_direct(                &
         reflectance = reflectance) ! inout input/output BRDFs per channel
 ```
 RTTOV计算的地表发射率：
-![RTTOV计算的地表发射率](research/rttov/rttov132-mw-scat/RTTOV_Modeled_Emiss_20230627.jpg)
+![RTTOV计算的地表发射率](./rttov132-mw-scat/RTTOV_Modeled_Emiss_20230627.jpg)
 
 Fastem海表发射率模拟+TELSEM2地表发射率
-![RTTOV计算的地表发射率](research/rttov/rttov132-mw-scat/TELSEM2_FASTEM_Emiss_20230627.jpg)
+![RTTOV计算的地表发射率](./rttov132-mw-scat/TELSEM2_FASTEM_Emiss_20230627.jpg)
 
 晴空亮温模拟（TELSEM2 Atlas提供地表发射率）
-![](research/rttov/rttov132-mw-scat/FYxx_TBs_RTTOV-TELSEM2_20230627.png)
+![](./rttov132-mw-scat/FYxx_TBs_RTTOV-TELSEM2_20230627.png)
 
 
 ## 参数的敏感性研究
-略。有时间的话补充，计划交给师妹练手。
+略。有时间的话补充
 
 ## 经验
 1. 在进行轨道模拟的时候，如果内存允许，应当将模拟样本一次性输入RTTOV中,这比循环每次样本并调用一次接口快很多。RTTOV的每次运行需要先inital，allocate, deallocate, check profile, check coefficents,等一系列的流程。频繁的结构体的创建、检查、赋值、释放，消耗绝大部分的时间；并且Fortran（formula transform）的优势就是进行快速的矩阵运算，所以大批量的数据一次性计算效率非常高。
