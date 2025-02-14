@@ -1,38 +1,13 @@
----
-title: RTTOV模式笔记：(七) 全天气地表微波比辐射反演方案
-date: 2023-08-24 22:00:00  
-tags: 
-- RTTOV
-- RTM
-categories: 
-- Research
-cover: https://s2.loli.net/2023/11/27/LtPk9WIfbrmwsDY.jpg
-# cover: https://public.websites.umich.edu/~jihenghu/space/research/rttov/rttov132-mw-scat/rttov-emiss-retrieve.png
-description: 本节主要介绍(Baordo and Geer, 2016) emissivity反演算法和相关实践。
-mathjax: true
+# RTTOV模式笔记：(七) 全天气地表微波比辐射反演方案
 
----
+&copy;Jiheng Hu 2023-2030, 禁止转载。
 
-{% note primary %}
-本笔记属于[RTTOV辐射传输模式学习笔记](../rttov132-column)专栏，包含以下文章：
-<div class="btn-center" style="margin-bottom:0px">
-{% btn '/research/rttov/rttov132-installlibs/', (一) 依赖安装 ,far fa-hand-point-right,outline blue larger %}
-{% btn '/research/rttov/rttov132-install/', (二) RTTOV V13.2安装  ,far fa-hand-point-right,outline pink larger %}
-{% btn '/research/rttov/rttov132-conventions/', (三) 一些约定和特性,far fa-hand-point-right,outline red larger %}
-{% btn '/research/rttov/rttov132-variables/', (四) RTTOV 变量和结构体,far fa-hand-point-right,outline purple larger %}
-{% btn '/research/rttov/rttov132-direct-fw/', (五) 基于Direct Forward的晴空模拟,far fa-hand-point-right,outline green larger %}
-{% btn '/research/rttov/rttov132-mw-scat/', (六) 基于MW-SCAT的水凝物模拟,far fa-hand-point-right,outline orange larger %}
-{% btn '/research/rttov/rttov132-emissivity-retrieve/', (七) 全天气地表微波比辐射反演方案,far fa-hand-point-right,outline navy larger %}
-</div>
-&copy; 2023-2030, Jiheng Hu. 本专栏内容禁止转载。
-{% endnote %}
 
-----
 本节将介绍RTTOV-SCATT模块内置的动态发射率反演的使用。这一部分源码中没有直接的example，但是文档和源码中已经提供了必备的接口，我们要做的就是把这些接口组合起来，实现反演流程。
 
 ## 反演流程的构建
 1. 流程框架
-![](research/rttov/rttov132-mw-scat/rttov-emiss-retrieve.png)
+![](./rttov132-mw-scat/rttov-emiss-retrieve.png)
 
 2. 源码细节
 - 引入必要的变量类型
@@ -200,10 +175,10 @@ end do
     0.900   0.900   0.900   0.900   0.900   0.900   0.900   0.900   0.901   0.901
 ```
 
-结果表明，初始设定的emissivity不会影响MLSE的反演。完整的输出结果：[output_sensivitive_to_mlseini.dat](../rttov132-mw-scat/output_sensivitive_to_mlseini.dat)
+结果表明，初始设定的emissivity不会影响MLSE的反演。完整的输出结果：[output_sensivitive_to_mlseini.dat](./rttov132-mw-scat/output_sensivitive_to_mlseini.dat)
 
 
 ## 个例模拟
 如上一章的个例，采用TELSEM2作为初始输入，考虑水凝物的RTTOV-SACTT模拟，同时嵌入本章所述的反演方案：
 结果如下：
-![](research/rttov/rttov132-mw-scat/Retrieved_Emissivity_20230627.jpg)
+![](./rttov132-mw-scat/Retrieved_Emissivity_20230627.jpg)
