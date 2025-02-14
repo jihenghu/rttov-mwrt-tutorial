@@ -21,9 +21,11 @@ MW-SCATT模块内部引用了rttov_direct()进行晴空模拟；对水凝物的�
 
 3. 亮温加权
 MW-SCATT分别计算晴空气体吸收和阴天的水凝物的散射吸收，再使用云分数进行辐射的加权平均。
+
 $$
 Tb_{all sky} = (1 − CC)* Tb_{clr} + CC * Tb_{cld}   
 $$
+
 按照[Baordo的文献](baordo.pdf)介绍，CC(cloud cover)在陆地上时被赋予了所有层中最大的那层的Cmax，而在海面上，采用多种水凝物含量的多层加权Cav。
 >Over ocean surfaces, C is computed as a hydrometeor-weighted average of cloud, convective and large-scale precipitation fractions across all vertical levels, providing an approximate but computationally efficient solution to account for the effects of subgrid variability in cloud and precipitation (Geer et al., 2009a,2009b, the ‘Cav’ approach).
 >Over land surfaces, C is computed as the largest cloud fraction in the model profile (the ‘Cmax’ approach.) This is essentially a tuning measure to compensate for a relative lack of deep convection over land in the model, compared with over the ocean.
