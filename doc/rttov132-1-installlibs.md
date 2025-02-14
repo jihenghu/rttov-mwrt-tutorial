@@ -142,9 +142,9 @@ netcdf-c-4.9.2 $
 编译安装
 ```bash
 netcdf-c-4.9.2 $ ./configure --prefix=/home/hjh/netcdf --enable-netcdf-4 --disable-libxml2
-make
-make check
-make install
+netcdf-c-4.9.2 $ make
+netcdf-c-4.9.2 $ make check
+netcdf-c-4.9.2 $ make install
 ```
 
 安装完成发现/home/hjh/netcdf/bin下有很多可执行文件，但是/home/hjh/netcdf/lib 没有fortran相关的库文件，所以后面需要安装netcdf-fortran
