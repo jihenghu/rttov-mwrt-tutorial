@@ -81,7 +81,7 @@ CALL rttov_scatt ( &
 
 ```
 - 输出
-```fortrab
+```fortran
   DO iprof = 1, nprof
     joff = (iprof-1_jpim) * nchannels
     WRITE(ioout,*)' '
