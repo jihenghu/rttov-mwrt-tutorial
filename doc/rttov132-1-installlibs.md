@@ -1,8 +1,6 @@
 
 # RTTOV模式笔记：(一) 依赖安装
 
-
-
 本节介绍RTTOV的服务器安装，除必要的软件支持，都使用普通用户权限来完成，做个记录；
 感谢[大气快速辐射传输模型RTTOV12.2安装教程及心得体会](https://blog.csdn.net/weixin_43471242/article/details/103248318)的详细说明，这里记录一下自己的安装过程。
 
@@ -15,8 +13,6 @@
 	- g++ 9.4.0
 - GNU Make 4.2.1
 
-
-
 安装包：
 - zlib-1.2.11.tar.gz
 - hdf5-1.8.21.tar.gz
@@ -24,6 +20,7 @@
 - netcdf-fortran-4.6.1.tar.gz
 - RTTOV 13.2
 
+除了RTTOV, 其他的安装包你可以在[Compiling WRF](https://www2.mmm.ucar.edu/wrf/OnLineTutorial/compilation_tutorial.php) 或者官方网站下载
 
 安装顺序就按照以上顺序，否则会出现依赖问题。
 将上述安装包放置到/home/hjh/下，并分别新建目录，结构如下：
@@ -199,3 +196,4 @@ netcdf-fortran-4.6.1 $ make install
 
 ### 参考
 [大气快速辐射传输模型RTTOV12.2安装教程及心得体会](https://blog.csdn.net/weixin_43471242/article/details/103248318)
+[Compiling WRF](https://www2.mmm.ucar.edu/wrf/OnLineTutorial/compilation_tutorial.php)
