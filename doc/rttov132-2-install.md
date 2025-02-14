@@ -104,6 +104,7 @@ Download MW hydrotable files? (y/n)
 Downloading files with extension .tar.bz2 from https://nwp-saf.eumetsat.int/downloads/rtcoef_rttov13/rttov13pred101L
 ......
 ```
+
 大气消光和散射系数是按照模式方案和卫星、仪器来存储的。如`rtcoef_rttov13/rttov13pred54L/`的部分文件：  
 
 ```
@@ -115,6 +116,7 @@ rtcoef_fy3_4_mwri.dat 		## FY3D MWRI
 rtcoef_fy3_5_mwhs2e_srf.dat ## FY3E MWHS
 rtcoef_fy3_5_mwts3_srf.dat  ## FY3E MWTS
 ```
+
 最新的FY3G MWRI和PMR,MERSI应用先行研究使用的系数表见[风云三号星G星应用先行数据集主页](http://satellite.nsmc.org.cn/FY3G/html/APPDATASET.html)。3G星的参数官方还在制作中，可能24年发布，目前使用的参数来自3D星的参数表。
 ![风云三号星G星应用先行数据集](./filzoo/fy3gappcoeff.png)
 2. 特性介绍
@@ -122,21 +124,25 @@ rtcoef_fy3_5_mwts3_srf.dat  ## FY3E MWTS
 考虑了5种水凝物的光学性质:雨、雪、霰、云液态水、云冰水。在代码中，必须按照相同的顺序在输入`cld_profiles(1:nprofiles)%hydro(1:nlevels,1:nhydro)`数组中提供含水量浓度，其中默认表的nhydro=5。您可以使用不同数量的粒子类型(nhydro)生成自己的hydrotable。
 
 5种水凝物采用的光学方案和粒径谱：
-	- `rain`: Mie sphere, Marshall-Palmer size distribution (unchanged since latest v12 Mietables)
-	- `snow`: ARTS large plate aggregate, Field07 tropical size distribution (updated for v13)
-	- `graupel`: ARTS column, Field07 tropical size distribution (new in v13)
-	- `cloud liquid`: Mie sphere, Gamma size distribution implemented within the new modified gamma framework (mostly unchanged in terms of optical properties, but with small differences from the previous gamma distribution, which was implemented internally using some scientific shortcuts)
-	- `cloud ice`: ARTS large column aggregate, Gamma PSD with generalised modified gamma parameters mu = 0, lambda = 1e4, gamma = 1 and N0 free (updated for v13)
+- `rain`: Mie sphere, Marshall-Palmer size distribution (unchanged since latest v12 Mietables)
 
-这里提到的generalised modified PSD的形式为：
-\[
-N(D)=N_0 D^\mu e^{-\lambda D}   ;  \mu=0时退化成指数函数
-\]
+- `snow`: ARTS large plate aggregate, Field07 tropical size distribution (updated for v13) 
 
->Geer A. J., Bauer B., Lonitz K., Barlakas V., Eriksson P., Mendrok J., Doherty A., Hocking J., and Chambon P. 2021: Bulk hydrometeor optical properties for microwave and sub-millimetre radiative transfer in RTTOV-SCATT v13.0. Geosci. Model Dev., 14, 7497-7526, https://doi.org/10.5194/gmd-14-7497-2021
+- `graupel`: ARTS column, Field07 tropical size distribution (new in v13) 
 
-	- MW optical depth coefs and RTTOV-SCATT optical properties
-	{% note success %}
+- `cloud liquid`: Mie sphere, Gamma size distribution implemented within the new modified gamma framework (mostly unchanged in terms of optical properties, but with small differences from the previous gamma distribution, which was implemented internally using some scientific shortcuts)
+
+- `cloud ice`: ARTS large column aggregate, Gamma PSD with generalised modified gamma parameters mu = 0, lambda = 1e4, gamma = 1 and N0 free (updated for v13)
+
+	这里提到的generalised modified PSD的形式为：
+
+	$$
+	N(D)=N_0 D^\mu e^{-\lambda D}   ;  \mu=0时退化成指数函数
+	$$
+
+	>Geer A. J., Bauer B., Lonitz K., Barlakas V., Eriksson P., Mendrok J., Doherty A., Hocking J., and Chambon P. 2021: Bulk hydrometeor optical properties for microwave and sub-millimetre radiative transfer in RTTOV-SCATT v13.0. Geosci. Model Dev., 14, 7497-7526, https://doi.org/10.5194/gmd-14-7497-2021
+
+- MW optical depth coefs and RTTOV-SCATT optical properties  
 	General information on MW sensor optical depth coefficient files:
 	- Based on Liebe 89/92 LbL model
 	- All on 54 levels
