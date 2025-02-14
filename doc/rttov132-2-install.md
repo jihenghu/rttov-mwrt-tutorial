@@ -161,5 +161,6 @@ BRDF是对短波段而言的地表双向反射率，需要的话可以自己下�
 当然了，可选还有很多，除了官网推荐的，还有 (Munchak,2020; Nourizi, 2011; Moncet, 2011; Hu, 2020) 等。
 
 ## 参考
-[RT Coefficients 下载](https://nwp-saf.eumetsat.int/site/software/rttov/download/coefficients/coefficient-download/)
+[RT Coefficients 下载](https://nwp-saf.eumetsat.int/site/software/rttov/download/coefficients/coefficient-download/)  
+
 [Emissivity Atlas 下载](https://nwp-saf.eumetsat.int/site/software/rttov/download/emissivity-data/)
