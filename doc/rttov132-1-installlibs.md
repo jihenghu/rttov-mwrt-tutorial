@@ -1,5 +1,5 @@
 
-title: RTTOV模式笔记：(一) 依赖安装
+## RTTOV模式笔记：(一) 依赖安装
 
 
 
@@ -181,7 +181,7 @@ $which nccopy
 
 #### NETCDF-Fortran
 
-```
+```bash
  $ cd 
 ~ $ tar xzvf netcdf-fortran-4.6.1.tar.gz
 ~ $ cd netcdf-fortran-4.6.1
