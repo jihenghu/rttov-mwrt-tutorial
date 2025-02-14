@@ -154,7 +154,9 @@ $ ./example_fwd.exe ## 执行
 
 $$
 Tb_{v,p}=T_u+Γ_v [e_{v,p} T_s+(1-e_{v,p}) T_d]
-\\\\
+$$
+
+$$
 e_{v,p}=(Tb_{v,p} - T_u - \tau_v T_d)/(τ_v (T_s-T_d))
 $$
 
