@@ -1,4 +1,4 @@
-# rttov-mwrt-tutorial
+# Tutorial of microwave radiative transfer in RTTOV v13.2
 Tutorial proj for the implemetation of microwave radiative simulation based on RTTOV v13.2
 
 ## Note
@@ -8,14 +8,14 @@ Tutorial proj for the implemetation of microwave radiative simulation based on R
 本文原发布于我的主页，转载于此，欢迎大家前来玩耍 🐱 -> [jihenghu.github.io](https://jihenghu.github.io)
 
 ## Chapters
-- [(一) 依赖安装 -- 介绍RTTOV的服务器安装所需要的依赖，包括NETCDF,HDF5,zlib等库的安装。](./doc/rttov132-installlibs/)
-- [(二) RTTOV V13.2安装 -- 介绍RTTOV的服务器安装和消光散射系数的下载，及模式介绍。](./doc/rttov132-install/)
-- [(三) 约定和特性 -- 粗浅解读一下RTTOV的一些基础设定。内容包括廓线插值等。](./doc/rttov132-conventions/)
-- [(四) RTTOV 变量和结构体 -- 解读一下RTTOV的源码，介绍一下RTTOV变量和结构体。](./doc/rttov132-variables/)
-- [(五) 基于Direct Forward的晴空模拟 -- 主要介绍晴空正向微波辐射传输的源码结构及模拟实践。](./doc/rttov132-direct-fw/)
-- [(六) 基于MW-SCAT的水凝物模拟 -- 介绍RTTOV MW-SCATT模块对于水凝物散射情形的模拟。](./doc/rttov132-mw-scat/)
-- [(七) 全天气地表微波比辐射反演方案 -- 本节主要介绍(Baordo and Geer, 2016) emissivity反演算法和相关实践。](./doc/rttov132-emissivity-retrieve/)
-- [番外 TELSEM Emissivity Atlas的离线使用' '本节介绍TELSEM2 Atlas的离线使用。](./doc/rttov132-telsem2-atlas/)
+- [(一) 依赖安装 -- 介绍RTTOV的服务器安装所需要的依赖，包括NETCDF,HDF5,zlib等库的安装。](./doc/rttov132-installlibs.md)
+- [(二) RTTOV V13.2安装 -- 介绍RTTOV的服务器安装和消光散射系数的下载，及模式介绍。](./doc/rttov132-install.md)
+- [(三) 约定和特性 -- 粗浅解读一下RTTOV的一些基础设定。内容包括廓线插值等。](./doc/rttov132-conventions.md)
+- [(四) RTTOV 变量和结构体 -- 解读一下RTTOV的源码，介绍一下RTTOV变量和结构体。](./doc/rttov132-variables.md)
+- [(五) 基于Direct Forward的晴空模拟 -- 主要介绍晴空正向微波辐射传输的源码结构及模拟实践。](./doc/rttov132-direct-fw.md)
+- [(六) 基于MW-SCAT的水凝物模拟 -- 介绍RTTOV MW-SCATT模块对于水凝物散射情形的模拟。](./doc/rttov132-mw-scat.md)
+- [(七) 全天气地表微波比辐射反演方案 -- 本节主要介绍(Baordo and Geer, 2016) emissivity反演算法和相关实践。](./doc/rttov132-emissivity-retrieve.md)
+- [番外 TELSEM Emissivity Atlas的离线使用' '本节介绍TELSEM2 Atlas的离线使用。](./doc/rttov132-telsem2-atlas.md)
 
 
 ## RTTOV简介 (个人理解)
@@ -43,6 +43,12 @@ RTTOV内置了诸多地表发射率、反射率atlas。
 - 2023-08-24
 更新第七章，部分有待补充；
 后续更新随缘了。
+
+## Todo list
+- RTTOV Jacobian matrix and variational inversion methods.
+- update ERA5 CDSAPI portal.
+- update RTTOV to V14.0
+
 
 ## License
 This project is licensed under the [BSD-3-Clause license](./LICENSE).
