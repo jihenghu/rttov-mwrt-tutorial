@@ -24,7 +24,7 @@
 
 安装顺序就按照以上顺序，否则会出现依赖问题。
 将上述安装包放置到/home/hjh/下，并分别新建目录，结构如下：
-```bash
+```cmd
 root@node05:/home/hjh$ tree -L 1
 .
 ├── hdf5
@@ -37,7 +37,7 @@ root@node05:/home/hjh$ tree -L 1
 └── zlib-1.2.11.tar.gz
 ```
 #### zlib
-```bash
+```cmd
 ~$ tar -zvxf zlib-1.2.11.tar.gz
 ~$ cd zlib-1.2.11
 ~/zlib-1.2.11$ ./configure --prefix=/home/hjh/zlib
@@ -50,7 +50,7 @@ $ rm -r zlib-1.2.11
 从make开始一般比较顺利，没有报错信息；
 netcdf的安装需要依赖zlib,先在/home/hjh/.bashrc定义zlib路径，以配置netcdf的编译信息：
 
-```bash
+```cmd
 ~$ vim ~/.bashrc 
 ## 追加已下两行
 ## zlib
@@ -65,13 +65,13 @@ export LD_LIBRARY_PATH=/home/hjh/zlib/lib:$LD_LIBRARY_PATH
 安装zlib*，这里需要联系管理员（权限狗:P）
 安装时避免目录下有zlib开头的文件，否则会导致正则匹配并提示找不到安装包；
 
-```bash
+```cmd
 (一个不含有zlib*的文件夹)# sudo apt install zlib*
 ```
 
 #### HDF5
 
-```bash
+```cmd
 $ cd
 ~ $ tar zxvf hdf5-1.8.21.tar.gz
 ~ $ cd hdf5-1.8.21
@@ -94,14 +94,14 @@ $ cd
 ```
 
 编译安装，make 过程非常长，warning可以忽略
-```bash
+```cmd
 $ make 
 $ make check
 $ make install
 ```
 可以在安装目录下/home/hjh/hdf5/bin 发现可执行文件；/home/hjh/hdf5/lib下发现库文件
 
-```bash
+```cmd
 ~$ vim ~/.bashrc 
 ## 追加以下内容
 ## HDF5 1.8.21
@@ -111,7 +111,7 @@ export CPPFLAGS=-I/home/hjh/hdf5/include  ## comment this after compiling
 export LDFLAGS=-L/home/hjh/hdf5/lib       #
 ## 保存退出
 ```
-```bash
+```cmd
 ~$ source ~/.bashrc
 ~$ echo $LD_LIBRARY_PATH
 ~$ echo $CPPFLAGS
@@ -124,7 +124,7 @@ $which h5fc
 
 #### netcdf 
 
-```bash
+```cmd
 $ cd
 ~$ tar zxvf netcdf-c-4.9.2.tar.gz
 ~$ cd netcdf-c-4.9.2
@@ -132,12 +132,12 @@ netcdf-c-4.9.2 $
 ```
 
 联系管理员安装
-```bash
+```cmd
 #apt install m4
 #apt install libcurl4-openssl-dev
 ```
 编译安装
-```bash
+```cmd
 netcdf-c-4.9.2 $ ./configure --prefix=/home/hjh/netcdf --enable-netcdf-4 --disable-libxml2
 netcdf-c-4.9.2 $ make
 netcdf-c-4.9.2 $ make check
@@ -146,7 +146,7 @@ netcdf-c-4.9.2 $ make install
 
 安装完成发现/home/hjh/netcdf/bin下有很多可执行文件，但是/home/hjh/netcdf/lib 没有fortran相关的库文件，所以后面需要安装netcdf-fortran
 
-```bash
+```cmd
 ~$ vim ~/.bashrc 
 
 ## HDF5 1.8.21
@@ -166,7 +166,7 @@ export CPPFLAGS=-I/home/hjh/netcdf/include  ## comment this after compiling
 export LDFLAGS=-L/home/hjh/netcdf/lib       ## 编译完成后注释掉
 ## 保存退出
 ```
-```bash
+```cmd
 ~$ source ~/.bashrc
 ~$ echo $LD_LIBRARY_PATH
 ~$ echo $CPPFLAGS
@@ -178,13 +178,13 @@ $which nccopy
 
 #### NETCDF-Fortran
 
-```bash
+```cmd
  $ cd 
 ~ $ tar xzvf netcdf-fortran-4.6.1.tar.gz
 ~ $ cd netcdf-fortran-4.6.1
 ```
 编译安装
-```bash
+```cmd
 netcdf-fortran-4.6.1 $ ./configure --prefix=/home/hjh/netcdf FC=gfortran
 netcdf-fortran-4.6.1 $ make
 netcdf-fortran-4.6.1 $ make check
