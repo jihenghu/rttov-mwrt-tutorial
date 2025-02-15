@@ -1,8 +1,8 @@
 # Tutorial of microwave radiative transfer in RTTOV v13.2
-Tutorial proj for the implemetation of microwave radiative simulation based on RTTOV v13.2
+Tutorial proj for microwave radiative simulation based on RTTOV v13.2
 
 ## Note
-<p style="color:red"> 今天RTTOV更新到了V14版本了，相比V13.2最大的改动时deplicate了coefficient table，在V15版本将完全去除（预计2027年）， 但是会更加好用--- 2025-2-12</p>
+<p style="color:red"> 今天RTTOV更新到了V14版本了，相比V13.2最大的改动是deplicate了coefficient table，在V15版本将完全去除（预计2027年）， 但是会更加好用--- 2025-2-12</p>
 
 ## Preface
 本文原发布于我的主页，转载于此，欢迎大家前来玩耍 🐱 -> [jihenghu.github.io](https://jihenghu.github.io)
@@ -15,7 +15,7 @@ Tutorial proj for the implemetation of microwave radiative simulation based on R
 - [(五) 基于Direct Forward的晴空模拟 -- 主要介绍晴空正向微波辐射传输的源码结构及模拟实践。](./doc/rttov132-5-direct-fw.md)
 - [(六) 基于MW-SCAT的水凝物模拟 -- 介绍RTTOV MW-SCATT模块对于水凝物散射情形的模拟。](./doc/rttov132-6-mw-scat.md)
 - [(七) 全天气地表微波比辐射反演方案 -- 本节主要介绍(Baordo and Geer, 2016) emissivity反演算法和相关实践。](./doc/rttov132-7-emissivity-retrieve.md)
-- [番外 TELSEM Emissivity Atlas的离线使用' '本节介绍TELSEM2 Atlas的离线使用。](./doc/rttov132-8-telsem2-atlas.md)
+- [番外 TELSEM Emissivity Atlas的离线使用。](./doc/rttov132-8-telsem2-atlas.md)
 
 
 ## RTTOV简介 (个人理解)
