@@ -1,4 +1,4 @@
-# RTTOV模式学习笔记：(四) RTTOV 变量和结构体
+# RTTOV模式学习笔记：(三) RTTOV 变量和结构体
 
 &copy;Jiheng Hu 2023-2030, 禁止转载。
 
@@ -156,7 +156,7 @@ TYPE rttov_coef
     TYPE(rttov_fast_coef), POINTER :: thermal(:)      ! FAST_COEFFICIENTS for gas opdep prediction
     TYPE(rttov_fast_coef), POINTER :: thermal_corr(:) ! Coefficients for correction term
 ``` 
-`id_platform`,`id_sat`,`id_inst`确定了用来读取的快速辐射参数的文件名，这些ID见下一篇[《RTTOV辐射传输模式实践：RTTOV V13.2 约定和方案》](rttov132-4-conventions)的表格介绍，当然了你可直接看文档。
+`id_platform`,`id_sat`,`id_inst`确定了用来读取的快速辐射参数的文件名，这些ID见下一篇[《RTTOV辐射传输模式实践：RTTOV V13.2 约定和方案》](rttov132-4-conventions.md)的表格介绍，当然了你可直接看文档。
 `rttov_fast_coef`类型用来读取和缓存多种气体的快速辐射传输FAST RT系数廓线：
 ```fortran
   !> @internal Actual storage for gas fast coefficients 
