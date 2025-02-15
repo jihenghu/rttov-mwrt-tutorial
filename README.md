@@ -1,4 +1,4 @@
-# Tutorial of microwave radiative transfer in RTTOV v13.2
+# Tutorial of Microwave Radiative Transfer in RTTOV v13.2
 Tutorial proj for microwave radiative simulation based on RTTOV v13.2
 
 ## Note
