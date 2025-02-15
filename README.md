@@ -10,8 +10,8 @@ Tutorial proj for microwave radiative simulation based on RTTOV v13.2
 ## Chapters
 - [(一) 依赖安装](./doc/rttov132-1-installlibs.md) -- 介绍RTTOV的服务器安装所需要的依赖，包括NETCDF,HDF5,zlib等库的安装;
 - [(二) RTTOV V13.2安装](./doc/rttov132-2-install.md) -- 介绍RTTOV的服务器安装和消光散射系数的下载，及模式介绍;
-- [(三) 约定和特性](./doc/rttov132-3-conventions.md) -- 粗浅解读一下RTTOV的一些基础设定。内容包括廓线插值等;
-- [(四) RTTOV 变量和结构体](./doc/rttov132-4-variables.md) -- 解读一下RTTOV的源码，介绍一下RTTOV变量和结构体;
+- [(三) RTTOV 变量和结构体](./doc/rttov132-3-variables.md) -- 解读一下RTTOV的源码，介绍一下RTTOV变量和结构体;
+- [(四) 约定和特性](./doc/rttov132-4-conventions.md) -- 粗浅解读一下RTTOV的一些基础设定。内容包括廓线插值等;
 - [(五) 基于Direct Forward的晴空模拟](./doc/rttov132-5-direct-fw.md) -- 晴空正向微波辐射传输的源码结构及模拟实践;
 - [(六) 基于MW-SCAT的水凝物模拟](./doc/rttov132-6-mw-scat.md) -- RTTOV MW-SCATT模块对于水凝物散射情形的模拟;
 - [(七) 全天气地表微波比辐射反演方案](./doc/rttov132-7-emissivity-retrieve.md) -- 介绍emissivity反演算法(Baordo and Geer, 2016)和相关实践;
