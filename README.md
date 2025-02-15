@@ -14,7 +14,7 @@ Tutorial proj for microwave radiative simulation based on RTTOV v13.2
 - [(四) RTTOV 变量和结构体](./doc/rttov132-4-variables.md) -- 解读一下RTTOV的源码，介绍一下RTTOV变量和结构体;
 - [(五) 基于Direct Forward的晴空模拟](./doc/rttov132-5-direct-fw.md) -- 晴空正向微波辐射传输的源码结构及模拟实践;
 - [(六) 基于MW-SCAT的水凝物模拟](./doc/rttov132-6-mw-scat.md) -- RTTOV MW-SCATT模块对于水凝物散射情形的模拟;
-- [(七) 全天气地表微波比辐射反演方案](./doc/rttov132-7-emissivity-retrieve.md) -- 介绍( emissivity反演算法Baordo and Geer, 2016)和相关实践;
+- [(七) 全天气地表微波比辐射反演方案](./doc/rttov132-7-emissivity-retrieve.md) -- 介绍emissivity反演算法(Baordo and Geer, 2016)和相关实践;
 - [番外 TELSEM Emissivity Atlas的离线使用](./doc/rttov132-8-telsem2-atlas.md)。
 
 
